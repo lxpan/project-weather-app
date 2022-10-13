@@ -33,7 +33,9 @@ async function getWeatherForCity(city) {
     });
 
     try {
-        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`);
+        const response = await fetch(
+            `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
+        );
         const data = await response.json();
         console.log(data);
         return processResponse(data);
