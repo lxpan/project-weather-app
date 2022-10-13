@@ -16,23 +16,24 @@ function KelvinToFahrenheit(kelvin) {
     throw new Error('Temperature is not a number!');
 }
 
-function processResponse(result) {
-    return {
-        weather: result.weather[0].main,
-        weather_description: result.weather[0].description,
-        temp: result.main.temp,
-        temp_celsius: KelvinToCelsius(result.main.temp),
-        temp_fahrenheit: KelvinToFahrenheit(result.main.temp),
-        feels_like_temp: result.main.feels_like,
-        temp_min: result.main.temp_min,
-        temp_max: result.main.temp_max,
-        coords: result.coord,
-        humidity: result.main.humidity,
-        wind: result.wind,
-    };
-}
-
 async function getWeatherForCity(city) {
+    const processResponse = (result) => (
+        {
+            city,
+            weather: result.weather[0].main,
+            weather_description: result.weather[0].description,
+            temp: result.main.temp,
+            temp_celsius: KelvinToCelsius(result.main.temp),
+            temp_fahrenheit: KelvinToFahrenheit(result.main.temp),
+            feels_like_temp: result.main.feels_like,
+            temp_min: result.main.temp_min,
+            temp_max: result.main.temp_max,
+            coords: result.coord,
+            humidity: result.main.humidity,
+            wind: result.wind,
+        }
+    );
+
     try {
         const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`);
         const data = await response.json();
