@@ -49,4 +49,11 @@ const printForecast = async (city) => {
     console.log(forecast);
 };
 
-printForecast('Ballarat');
+// printForecast('Ballarat');
+
+const cityButton = document.getElementById('getCityButton');
+
+cityButton.addEventListener('click', () => {
+    const city = document.getElementById('cityBox');
+    printForecast(city.value);
+});
