@@ -1,7 +1,10 @@
 const API_KEY = 'a9fa31006d3ec59a7888dead8b265f57';
 
-// let tempUnit = 'C';
-let tempUnit = 'F';
+const opt = {
+    tempUnit: 'C',
+    forecast: null,
+    city: null,
+}
 
 const MOCK_DATA = {
     coord: {
@@ -51,6 +54,14 @@ const MOCK_DATA = {
     cod: 200,
 };
 
+function toggleUnits() {
+    if (opt.tempUnit === 'F') {
+        opt.tempUnit = 'C';
+    } else if (opt.tempUnit === 'C') {
+        opt.tempUnit = 'F';
+    }
+}
+
 function degreesToCardinal(windDir) {
     const compassSectors = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N'];
 
@@ -99,9 +110,9 @@ async function getWeatherForCity(city) {
         temp_min: result.main.temp_min,
         temp_max: result.main.temp_max,
         coords: result.coord,
-        humidity: (result.humidity) ? result.humidity : result.main.humidity,
+        humidity: result.humidity ? result.humidity : result.main.humidity,
         wind: result.wind,
-        rain: (result.rain) ? result.rain['1h'] : null,
+        rain: result.rain ? result.rain['1h'] : null,
     });
 
     try {
@@ -139,10 +150,10 @@ function displayForecast(data) {
         // temperature
         const temp = document.querySelector('.temp');
         const descriptor = document.querySelector('.descriptor');
-        temp.textContent = displayTemperature(data.temp, tempUnit);
+        temp.textContent = displayTemperature(data.temp, opt.tempUnit);
         descriptor.textContent = `Feels like ${displayTemperature(
             data.feels_like_temp,
-            'C'
+            opt.tempUnit
         )}. ${capitaliseString(data.weather_description)}.`;
     };
 
@@ -152,7 +163,7 @@ function displayForecast(data) {
         wind.textContent = `${data.wind.speed} m/s ${degreesToCardinal(
             data.wind.deg
         )}`;
-    }
+    };
 
     const displayRain = () => {
         const rainDiv = document.querySelector('.rain');
@@ -161,7 +172,7 @@ function displayForecast(data) {
         } else {
             rainDiv.textContent = `Humidity: ${data.humidity}%`;
         }
-    }
+    };
 
     displayLocation();
     displayCurrentTemperature();
@@ -170,9 +181,9 @@ function displayForecast(data) {
 }
 
 const printForecast = async (city) => {
-    const forecast = await getWeatherForCity(city);
-    displayForecast(forecast);
-    console.log(forecast);
+    opt.forecast = await getWeatherForCity(city);
+    displayForecast(opt.forecast);
+    console.log(opt.forecast);
 };
 
 // printForecast('Ballarat');
@@ -180,8 +191,8 @@ const printForecast = async (city) => {
 const cityButton = document.getElementById('getCityButton');
 
 cityButton.addEventListener('click', () => {
-    const city = document.getElementById('cityBox');
-    printForecast(city.value);
+    opt.city = document.getElementById('cityBox').value;
+    printForecast(opt.city);
 });
 
 // printForecast('Ballarat');
