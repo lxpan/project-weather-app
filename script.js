@@ -73,8 +73,6 @@ function displayTemperature(kelvin, unit) {
     }
 }
 
-
-
 async function getWeatherForCity(city) {
     const processResponse = (result) => ({
         city,
@@ -105,15 +103,28 @@ async function getWeatherForCity(city) {
 }
 
 function displayForecast(data, temp_unit) {
+    const capitaliseString = (str) => {
+        if (typeof str === 'string') {
+            const capitalise = str.charAt(0).toUpperCase() + str.slice(1);
+            return capitalise;
+        } 
+        throw new Error('Not a string!');
+    }
+
     const location = document.querySelector('.location');
     const geocode = document.querySelector('.geocode');
     // temperature 
     const temp = document.querySelector('.temp');
+    const descriptor = document.querySelector('.descriptor');
 
     location.textContent = `${data.city}, ${data.country_code}`;
     geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
 
+    
+
+
     temp.textContent = displayTemperature(data.temp, 'C');
+    descriptor.textContent = `Feels like ${displayTemperature(data.feels_like_temp, 'C')}. ${capitaliseString(data.weather_description)}.`;
 }
 
 const printForecast = async (city) => {
