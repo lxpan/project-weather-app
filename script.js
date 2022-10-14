@@ -111,7 +111,7 @@ async function getWeatherForCity(city) {
     return 'Error';
 }
 
-function displayForecast(data, temp_unit) {
+function displayForecast(data, tempUnit) {
     const capitaliseString = (str) => {
         if (typeof str === 'string') {
             const capitalise = str.charAt(0).toUpperCase() + str.slice(1);
