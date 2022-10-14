@@ -99,11 +99,12 @@ async function getWeatherForCity(city) {
     });
 
     try {
-        // const response = await fetch(
-        //     `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
-        // );
-        // const data = await response.json();
-        const data = MOCK_DATA;
+        const response = await fetch(
+            `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
+        );
+        const data = await response.json();
+        console.log(data);
+        // const data = MOCK_DATA;
 
         return processResponse(data);
     } catch (error) {
