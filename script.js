@@ -1,52 +1,52 @@
 const API_KEY = 'a9fa31006d3ec59a7888dead8b265f57';
 
 const MOCK_DATA = {
-    "coord": {
-        "lon": 143.8496,
-        "lat": -37.5662
+    coord: {
+        lon: 143.8496,
+        lat: -37.5662,
     },
-    "weather": [
+    weather: [
         {
-            "id": 500,
-            "main": "Rain",
-            "description": "light rain",
-            "icon": "10d"
-        }
+            id: 500,
+            main: 'Rain',
+            description: 'light rain',
+            icon: '10d',
+        },
     ],
-    "base": "stations",
-    "main": {
-        "temp": 283.7,
-        "feels_like": 283.13,
-        "temp_min": 283.7,
-        "temp_max": 283.7,
-        "pressure": 1010,
-        "humidity": 89,
-        "sea_level": 1010,
-        "grnd_level": 958
+    base: 'stations',
+    main: {
+        temp: 283.7,
+        feels_like: 283.13,
+        temp_min: 283.7,
+        temp_max: 283.7,
+        pressure: 1010,
+        humidity: 89,
+        sea_level: 1010,
+        grnd_level: 958,
     },
-    "visibility": 10000,
-    "wind": {
-        "speed": 5.53,
-        "deg": 269,
-        "gust": 12.37
+    visibility: 10000,
+    wind: {
+        speed: 5.53,
+        deg: 269,
+        gust: 12.37,
     },
-    "rain": {
-        "1h": 0.46
+    rain: {
+        '1h': 0.46,
     },
-    "clouds": {
-        "all": 98
+    clouds: {
+        all: 98,
     },
-    "dt": 1665716871,
-    "sys": {
-        "country": "AU",
-        "sunrise": 1665690094,
-        "sunset": 1665736774
+    dt: 1665716871,
+    sys: {
+        country: 'AU',
+        sunrise: 1665690094,
+        sunset: 1665736774,
     },
-    "timezone": 39600,
-    "id": 2177091,
-    "name": "Ballarat",
-    "cod": 200
-}
+    timezone: 39600,
+    id: 2177091,
+    name: 'Ballarat',
+    cod: 200,
+};
 
 function displayTemperature(kelvin, unit) {
     function KelvinToCelsius() {
@@ -56,7 +56,7 @@ function displayTemperature(kelvin, unit) {
         }
         throw new Error('Temperature is not a number!');
     }
-    
+
     function KelvinToFahrenheit() {
         if (typeof kelvin === 'number') {
             const fahrenheit = 1.8 * (kelvin - 273) + 32;
@@ -94,7 +94,7 @@ async function getWeatherForCity(city) {
         // );
         // const data = await response.json();
         const data = MOCK_DATA;
-        
+
         return processResponse(data);
     } catch (error) {
         console.log(`Error: ${error}, retrieving forecast for ${city}`);
@@ -107,24 +107,23 @@ function displayForecast(data, temp_unit) {
         if (typeof str === 'string') {
             const capitalise = str.charAt(0).toUpperCase() + str.slice(1);
             return capitalise;
-        } 
+        }
         throw new Error('Not a string!');
-    }
+    };
 
     const location = document.querySelector('.location');
     const geocode = document.querySelector('.geocode');
-    // temperature 
-    const temp = document.querySelector('.temp');
-    const descriptor = document.querySelector('.descriptor');
-
     location.textContent = `${data.city}, ${data.country_code}`;
     geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
-
     
-
-
+    // temperature
+    const temp = document.querySelector('.temp');
+    const descriptor = document.querySelector('.descriptor');
     temp.textContent = displayTemperature(data.temp, 'C');
-    descriptor.textContent = `Feels like ${displayTemperature(data.feels_like_temp, 'C')}. ${capitaliseString(data.weather_description)}.`;
+    descriptor.textContent = `Feels like ${displayTemperature(
+        data.feels_like_temp,
+        'C'
+    )}. ${capitaliseString(data.weather_description)}.`;
 }
 
 const printForecast = async (city) => {
