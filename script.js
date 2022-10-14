@@ -1,5 +1,53 @@
 const API_KEY = 'a9fa31006d3ec59a7888dead8b265f57';
 
+const MOCK_DATA = {
+    "coord": {
+        "lon": 143.8496,
+        "lat": -37.5662
+    },
+    "weather": [
+        {
+            "id": 500,
+            "main": "Rain",
+            "description": "light rain",
+            "icon": "10d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 283.7,
+        "feels_like": 283.13,
+        "temp_min": 283.7,
+        "temp_max": 283.7,
+        "pressure": 1010,
+        "humidity": 89,
+        "sea_level": 1010,
+        "grnd_level": 958
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 5.53,
+        "deg": 269,
+        "gust": 12.37
+    },
+    "rain": {
+        "1h": 0.46
+    },
+    "clouds": {
+        "all": 98
+    },
+    "dt": 1665716871,
+    "sys": {
+        "country": "AU",
+        "sunrise": 1665690094,
+        "sunset": 1665736774
+    },
+    "timezone": 39600,
+    "id": 2177091,
+    "name": "Ballarat",
+    "cod": 200
+}
+
 function KelvinToCelsius(kelvin) {
     if (typeof kelvin === 'number') {
         const celsius = kelvin - 273.15;
@@ -19,6 +67,7 @@ function KelvinToFahrenheit(kelvin) {
 async function getWeatherForCity(city) {
     const processResponse = (result) => ({
         city,
+        country_code: result.sys.country,
         weather: result.weather[0].main,
         weather_description: result.weather[0].description,
         temp: result.main.temp,
@@ -33,11 +82,12 @@ async function getWeatherForCity(city) {
     });
 
     try {
-        const response = await fetch(
-            `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
-        );
-        const data = await response.json();
-        console.log(data);
+        // const response = await fetch(
+        //     `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
+        // );
+        // const data = await response.json();
+        const data = MOCK_DATA;
+        
         return processResponse(data);
     } catch (error) {
         console.log(`Error: ${error}, retrieving forecast for ${city}`);
@@ -45,8 +95,18 @@ async function getWeatherForCity(city) {
     return 'Error';
 }
 
+function displayForecast(data) {
+    const location = document.querySelector('.location');
+    const geocode = document.querySelector('.geocode');
+
+    location.textContent = `${data.city}, ${data.country_code}`;
+    geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
+
+}
+
 const printForecast = async (city) => {
     const forecast = await getWeatherForCity(city);
+    displayForecast(forecast);
     console.log(forecast);
 };
 
@@ -58,3 +118,5 @@ cityButton.addEventListener('click', () => {
     const city = document.getElementById('cityBox');
     printForecast(city.value);
 });
+
+printForecast('Ballarat');
