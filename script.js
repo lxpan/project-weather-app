@@ -186,13 +186,28 @@ const printForecast = async (city) => {
     console.log(opt.forecast);
 };
 
+function displayMap() {
+    const mapIFrame = document.querySelector('.weather-map iframe');
+
+    const zoomLevel = 10;
+    const data = opt.forecast;
+    const layer = 'precipitation_new';
+    const x = 10;
+    const y = 10;
+    const mapURL = `https://tile.openweathermap.org/map/${layer}/${zoomLevel}/${x}/${y}.png?appid=${API_KEY}`;
+    mapIFrame.src = mapURL;
+}
+
+async function loadCityForecast() {
+    opt.city = document.getElementById('cityBox').value;
+    await printForecast(opt.city);
+    // displayMap();
+}
+
 // printForecast('Ballarat');
 
 const cityButton = document.getElementById('getCityButton');
 
-cityButton.addEventListener('click', () => {
-    opt.city = document.getElementById('cityBox').value;
-    printForecast(opt.city);
-});
+cityButton.addEventListener('click', loadCityForecast);
 
 // printForecast('Ballarat');
