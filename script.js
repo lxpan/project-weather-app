@@ -124,6 +124,10 @@ function displayForecast(data, temp_unit) {
         data.feels_like_temp,
         'C'
     )}. ${capitaliseString(data.weather_description)}.`;
+    
+    // wind
+    const wind = document.querySelector('.wind');
+    wind.textContent = `${data.wind.speed} m/s at bearing of ${data.wind.deg}`;
 }
 
 const printForecast = async (city) => {
