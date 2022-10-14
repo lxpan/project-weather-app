@@ -48,6 +48,15 @@ const MOCK_DATA = {
     cod: 200,
 };
 
+function degreesToCardinal(windDir) {
+    const compassSectors = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+
+    let index = windDir % 360;
+    index = Math.ceil(index / 45.0);
+    const compassDirection = compassSectors[index];
+    return compassDirection;
+}
+
 function displayTemperature(kelvin, unit) {
     function KelvinToCelsius() {
         if (typeof kelvin === 'number') {
@@ -127,7 +136,7 @@ function displayForecast(data, temp_unit) {
     
     // wind
     const wind = document.querySelector('.wind');
-    wind.textContent = `${data.wind.speed} m/s at bearing of ${data.wind.deg}`;
+    wind.textContent = `${data.wind.speed} m/s ${degreesToCardinal(data.wind.deg)}`;
 }
 
 const printForecast = async (city) => {
