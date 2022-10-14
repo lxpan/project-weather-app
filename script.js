@@ -156,7 +156,7 @@ function displayForecast(data, tempUnit) {
         if (data.rain) {
             rainDiv.textContent = `Rain ${data.rain} mm, Humidity: ${data.humidity}%`;
         } else {
-            rainDiv.textContent = '';
+            rainDiv.textContent = `Humidity: ${data.humidity}%`;
         }
     }
 
