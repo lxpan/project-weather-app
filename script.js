@@ -95,7 +95,7 @@ async function getWeatherForCity(city) {
         coords: result.coord,
         humidity: result.main.humidity,
         wind: result.wind,
-        rain: result.rain['1h']
+        rain: result.rain['1h'],
     });
 
     try {
@@ -121,27 +121,40 @@ function displayForecast(data, tempUnit) {
         throw new Error('Not a string!');
     };
 
-    const location = document.querySelector('.location');
-    const geocode = document.querySelector('.geocode');
-    location.textContent = `${data.city}, ${data.country_code}`;
-    geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
-    
-    // temperature
-    const temp = document.querySelector('.temp');
-    const descriptor = document.querySelector('.descriptor');
-    temp.textContent = displayTemperature(data.temp, 'C');
-    descriptor.textContent = `Feels like ${displayTemperature(
-        data.feels_like_temp,
-        'C'
-    )}. ${capitaliseString(data.weather_description)}.`;
-    
-    // wind
-    const wind = document.querySelector('.wind');
-    wind.textContent = `${data.wind.speed} m/s ${degreesToCardinal(data.wind.deg)}`;
+    const displayLocation = () => {
+        const location = document.querySelector('.location');
+        const geocode = document.querySelector('.geocode');
+        location.textContent = `${data.city}, ${data.country_code}`;
+        geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
+    };
 
-    // rain
-    const rainDiv = document.querySelector('.rain');
-    rainDiv.textContent = `Rain ${data.rain} mm, Humidity: ${data.humidity}%`;
+    const displayCurrentTemperature = () => {
+        // temperature
+        const temp = document.querySelector('.temp');
+        const descriptor = document.querySelector('.descriptor');
+        temp.textContent = displayTemperature(data.temp, 'C');
+        descriptor.textContent = `Feels like ${displayTemperature(
+            data.feels_like_temp,
+            'C'
+        )}. ${capitaliseString(data.weather_description)}.`;
+    };
+
+    const displayWind = () => {
+        const wind = document.querySelector('.wind');
+        wind.textContent = `${data.wind.speed} m/s ${degreesToCardinal(
+            data.wind.deg
+        )}`;
+    }
+
+    const displayRain = () => {
+        const rainDiv = document.querySelector('.rain');
+        rainDiv.textContent = `Rain ${data.rain} mm, Humidity: ${data.humidity}%`;
+    }
+
+    displayLocation();
+    displayCurrentTemperature();
+    displayWind();
+    displayRain();
 }
 
 const printForecast = async (city) => {
