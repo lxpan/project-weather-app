@@ -48,21 +48,32 @@ const MOCK_DATA = {
     "cod": 200
 }
 
-function KelvinToCelsius(kelvin) {
-    if (typeof kelvin === 'number') {
-        const celsius = kelvin - 273.15;
-        return celsius.toPrecision(4);
+function displayTemperature(kelvin, unit) {
+    function KelvinToCelsius() {
+        if (typeof kelvin === 'number') {
+            const celsius = kelvin - 273.15;
+            return celsius.toPrecision(4);
+        }
+        throw new Error('Temperature is not a number!');
     }
-    throw new Error('Temperature is not a number!');
+    
+    function KelvinToFahrenheit() {
+        if (typeof kelvin === 'number') {
+            const fahrenheit = 1.8 * (kelvin - 273) + 32;
+            return fahrenheit.toPrecision(4);
+        }
+        throw new Error('Temperature is not a number!');
+    }
+
+    if (unit === 'C') {
+        return `${KelvinToCelsius(kelvin)}\u00B0C`;
+    }
+    if (unit === 'F') {
+        return `${KelvinToFahrenheit(kelvin)}\u00B0F`;
+    }
 }
 
-function KelvinToFahrenheit(kelvin) {
-    if (typeof kelvin === 'number') {
-        const fahrenheit = 1.8 * (kelvin - 273) + 32;
-        return fahrenheit.toPrecision(4);
-    }
-    throw new Error('Temperature is not a number!');
-}
+
 
 async function getWeatherForCity(city) {
     const processResponse = (result) => ({
@@ -71,8 +82,6 @@ async function getWeatherForCity(city) {
         weather: result.weather[0].main,
         weather_description: result.weather[0].description,
         temp: result.main.temp,
-        temp_celsius: KelvinToCelsius(result.main.temp),
-        temp_fahrenheit: KelvinToFahrenheit(result.main.temp),
         feels_like_temp: result.main.feels_like,
         temp_min: result.main.temp_min,
         temp_max: result.main.temp_max,
@@ -104,10 +113,7 @@ function displayForecast(data, temp_unit) {
     location.textContent = `${data.city}, ${data.country_code}`;
     geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
 
-    temp.textContent = `${data.temp} \u00B0C`;
-
-
-
+    temp.textContent = displayTemperature(data.temp, 'C');
 }
 
 const printForecast = async (city) => {
