@@ -1,5 +1,8 @@
 const API_KEY = 'a9fa31006d3ec59a7888dead8b265f57';
 
+// let tempUnit = 'C';
+let tempUnit = 'F';
+
 const MOCK_DATA = {
     coord: {
         lon: 143.8496,
@@ -116,7 +119,7 @@ async function getWeatherForCity(city) {
     return 'Error';
 }
 
-function displayForecast(data, tempUnit) {
+function displayForecast(data) {
     const capitaliseString = (str) => {
         if (typeof str === 'string') {
             const capitalise = str.charAt(0).toUpperCase() + str.slice(1);
@@ -136,7 +139,7 @@ function displayForecast(data, tempUnit) {
         // temperature
         const temp = document.querySelector('.temp');
         const descriptor = document.querySelector('.descriptor');
-        temp.textContent = displayTemperature(data.temp, 'C');
+        temp.textContent = displayTemperature(data.temp, tempUnit);
         descriptor.textContent = `Feels like ${displayTemperature(
             data.feels_like_temp,
             'C'
