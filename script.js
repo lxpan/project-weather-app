@@ -1,3 +1,9 @@
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import XYZ from 'ol/source/XYZ';
+
+
 const API_KEY = 'a9fa31006d3ec59a7888dead8b265f57';
 
 const opt = {
