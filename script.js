@@ -81,6 +81,8 @@ function displayTemperature(kelvin, unit) {
     if (unit === 'F') {
         return `${KelvinToFahrenheit(kelvin)}\u00B0F`;
     }
+
+    return new Error('No matching unit specified.');
 }
 
 async function getWeatherForCity(city) {
