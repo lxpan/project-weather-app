@@ -95,6 +95,7 @@ async function getWeatherForCity(city) {
         coords: result.coord,
         humidity: result.main.humidity,
         wind: result.wind,
+        rain: result.rain['1h']
     });
 
     try {
@@ -137,6 +138,10 @@ function displayForecast(data, tempUnit) {
     // wind
     const wind = document.querySelector('.wind');
     wind.textContent = `${data.wind.speed} m/s ${degreesToCardinal(data.wind.deg)}`;
+
+    // rain
+    const rainDiv = document.querySelector('.rain');
+    rainDiv.textContent = `Rain ${data.rain} mm, Humidity: ${data.humidity}%`;
 }
 
 const printForecast = async (city) => {
