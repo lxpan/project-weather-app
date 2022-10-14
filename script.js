@@ -95,12 +95,18 @@ async function getWeatherForCity(city) {
     return 'Error';
 }
 
-function displayForecast(data) {
+function displayForecast(data, temp_unit) {
     const location = document.querySelector('.location');
     const geocode = document.querySelector('.geocode');
+    // temperature 
+    const temp = document.querySelector('.temp');
 
     location.textContent = `${data.city}, ${data.country_code}`;
     geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
+
+    temp.textContent = `${data.temp} \u00B0C`;
+
+
 
 }
 
