@@ -49,10 +49,11 @@ const MOCK_DATA = {
 };
 
 function degreesToCardinal(windDir) {
-    const compassSectors = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    const compassSectors = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', 'N'];
 
     let index = windDir % 360;
-    index = Math.ceil(index / 45.0);
+    index = Math.round(index / 45);
+    console.log(index);
     const compassDirection = compassSectors[index];
     return compassDirection;
 }
@@ -93,9 +94,9 @@ async function getWeatherForCity(city) {
         temp_min: result.main.temp_min,
         temp_max: result.main.temp_max,
         coords: result.coord,
-        humidity: result.main.humidity,
+        humidity: (result.humidity) ? result.humidity : result.main.humidity,
         wind: result.wind,
-        rain: result.rain['1h'],
+        rain: (result.rain) ? result.rain['1h'] : null,
     });
 
     try {
@@ -141,6 +142,7 @@ function displayForecast(data, tempUnit) {
     };
 
     const displayWind = () => {
+        console.log(data.wind.deg);
         const wind = document.querySelector('.wind');
         wind.textContent = `${data.wind.speed} m/s ${degreesToCardinal(
             data.wind.deg
@@ -149,7 +151,11 @@ function displayForecast(data, tempUnit) {
 
     const displayRain = () => {
         const rainDiv = document.querySelector('.rain');
-        rainDiv.textContent = `Rain ${data.rain} mm, Humidity: ${data.humidity}%`;
+        if (data.rain) {
+            rainDiv.textContent = `Rain ${data.rain} mm, Humidity: ${data.humidity}%`;
+        } else {
+            rainDiv.textContent = '';
+        }
     }
 
     displayLocation();
@@ -173,4 +179,4 @@ cityButton.addEventListener('click', () => {
     printForecast(city.value);
 });
 
-printForecast('Ballarat');
+// printForecast('Ballarat');
