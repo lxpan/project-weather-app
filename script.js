@@ -62,7 +62,7 @@ function displayTemperature(kelvin, unit) {
     function KelvinToCelsius() {
         if (typeof kelvin === 'number') {
             const celsius = kelvin - 273.15;
-            return celsius.toPrecision(4);
+            return celsius.toPrecision(3);
         }
         throw new Error('Temperature is not a number!');
     }
