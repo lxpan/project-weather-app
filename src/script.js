@@ -194,10 +194,9 @@ function displayMap(data) {
     const y = 4;
     const mapURL = `https://tile.openweathermap.org/map/${layer}/${zoomLevel}/${x}/${y}.png?appid=${API_KEY}`;
     
-    const lon = data.coords.lon;
-    const lat = data.coords.lat;
-    console.log(data);
-    
+    const { lon } = data.coords;
+    const { lat } = data.coords;
+        
     const map = new Map({
         target: 'map',
         layers: [
