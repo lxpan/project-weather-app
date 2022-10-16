@@ -1,4 +1,5 @@
 import {Map, View} from 'ol';
+import {fromLonLat} from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import XYZ from 'ol/source/XYZ';
@@ -186,22 +187,17 @@ function displayForecast(data) {
     displayRain();
 }
 
-const printForecast = async (city) => {
-    opt.forecast = await getWeatherForCity(city);
-    displayForecast(opt.forecast);
-    console.log(opt.forecast);
-};
-
-function displayMap() {
-    const zoomLevel = 10;
-    const data = opt.forecast;
+function displayMap(data) {
     const layer = 'precipitation_new';
-    const x = 10;
-    const y = 10;
+    const zoomLevel = 4;
+    const x = 4;
+    const y = 4;
     const mapURL = `https://tile.openweathermap.org/map/${layer}/${zoomLevel}/${x}/${y}.png?appid=${API_KEY}`;
-
-    console.log('Does this work???');
-
+    
+    const lon = data.coords.lon;
+    const lat = data.coords.lat;
+    console.log(data);
+    
     const map = new Map({
         target: 'map',
         layers: [
@@ -210,32 +206,31 @@ function displayMap() {
             }),
         ],
         view: new View({
-            center: [0, 0],
-            zoom: 4,
+            center: fromLonLat([lon, lat]),
+            zoom: 10,
         }),
     });
 
     const precipLayer = new TileLayer({
-        source: XYZ({
+        source: new XYZ({
             url: mapURL,
         })
     });
     map.addLayer(precipLayer);
 }
 
+const printForecast = async (city) => {
+    opt.forecast = await getWeatherForCity(city);
+    displayForecast(opt.forecast);
+    displayMap(opt.forecast);
+};
+
 function loadCityForecast() {
     opt.city = document.getElementById('cityBox').value;
     printForecast(opt.city);
-    displayMap();
-    console.log('display map?');
 }
 
-// printForecast('Ballarat');
-
 const cityButton = document.getElementById('getCityButton');
-
 cityButton.addEventListener('click', loadCityForecast);
-
-console.log("Does anything work?");
 
 // printForecast('Ballarat');
