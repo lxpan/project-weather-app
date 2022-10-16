@@ -2,6 +2,7 @@ import {Map, View} from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import XYZ from 'ol/source/XYZ';
+import './style.css';
 
 const API_KEY = 'a9fa31006d3ec59a7888dead8b265f57';
 
