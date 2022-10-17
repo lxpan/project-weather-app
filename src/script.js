@@ -188,11 +188,10 @@ function displayForecast(data) {
 }
 
 function displayMap(data) {
-    const layer = 'precipitation_new';
-    const zoomLevel = 4;
-    const x = 4;
-    const y = 4;
-    const mapURL = `https://tile.openweathermap.org/map/${layer}/${zoomLevel}/${x}/${y}.png?appid=${API_KEY}`;
+    const layer = 'clouds_new';
+    // WeatherMap 1.0
+    const mapURL = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${API_KEY}`;
+    // WeatherMap 2.0
     
     const { lon } = data.coords;
     const { lat } = data.coords;
