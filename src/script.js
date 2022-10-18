@@ -111,6 +111,7 @@ async function getWeatherForCity(city) {
         country_code: result.sys.country,
         weather: result.weather[0].main,
         weather_description: result.weather[0].description,
+        weather_icon: result.weather[0].icon,
         temp: result.main.temp,
         feels_like_temp: result.main.feels_like,
         temp_min: result.main.temp_min,
@@ -156,8 +157,9 @@ function displayForecast(data) {
     const displayAtAGlance = () => {
         const mainTemp = document.querySelector('.main-temp');
         const weatherIcon = document.querySelector('.weather-icon');
+        const iconCode = data.weather_icon;
         mainTemp.textContent = displayTemperature(data.temp, opt.tempUnit);
-        weatherIcon.src = 'http://openweathermap.org/img/wn/10d@2x.png';
+        weatherIcon.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
     }
 
     const displayCurrentTemperature = () => {
