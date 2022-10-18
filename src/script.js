@@ -188,7 +188,7 @@ function displayForecast(data) {
 }
 
 function displayMap(data) {
-    const layer = 'clouds_new';
+    const layer = 'precipitation_new';
     // WeatherMap 1.0
     const mapURL = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${API_KEY}`;
     // WeatherMap 2.0
