@@ -6,8 +6,31 @@ body {
     align-items: center;
 }
 
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px;
+}
+
+.geo-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.at-a-glance {
+    display: flex;
+    align-items: center;
+}
+
+.main-temp {
+    font-size: 2rem;
+}
+
 h2 {
-    margin-bottom: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .geocode {
