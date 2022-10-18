@@ -106,6 +106,13 @@ function displayTemperature(kelvin, unit) {
 }
 
 async function getWeatherForCity(city) {
+    const convertUTCtoLocalTime = (utc) => {
+        const timestamp = utc += ' UTC';
+        const date = new Date(timestamp);
+        const localTimestamp = date.toString();
+        return localTimestamp;
+    }
+
     const processResponse = (result) => ({
         city,
         country_code: result.sys.country,
@@ -120,6 +127,7 @@ async function getWeatherForCity(city) {
         humidity: result.humidity ? result.humidity : result.main.humidity,
         wind: result.wind,
         rain: result.rain ? result.rain['1h'] : null,
+        time: (result.dt_txt) ? convertUTCtoLocalTime(result.dt_txt) : null,
     });
 
     try {
@@ -132,14 +140,14 @@ async function getWeatherForCity(city) {
             `https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${API_KEY}&units=metric`
         );
         const fiveDayData = await responseFiveDay.json();
-        // const fiveDayDataProcessed = 
-
+        const fiveDayDataProcessed = fiveDayData.list.map((row) => processResponse(row));
         console.log(fiveDayData);
+        console.log(fiveDayDataProcessed);
         
         // const data = MOCK_DATA;
         console.log(data);
 
-        return [processResponse(data), fiveDayData];
+        return [processResponse(data), fiveDayDataProcessed];
     } catch (error) {
         console.log(`Error: ${error}, retrieving forecast for ${city}`);
     }
