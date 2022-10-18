@@ -1,5 +1,5 @@
-import {Map, View} from 'ol';
-import {fromLonLat} from 'ol/proj';
+import { Map, View } from 'ol';
+import { fromLonLat } from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import XYZ from 'ol/source/XYZ';
@@ -127,11 +127,19 @@ async function getWeatherForCity(city) {
             `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
         );
         const data = await response.json();
+
+        const responseFiveDay = await fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${API_KEY}&units=metric`
+        );
+        const fiveDayData = await responseFiveDay.json();
+        // const fiveDayDataProcessed = 
+
+        console.log(fiveDayData);
+        
         // const data = MOCK_DATA;
         console.log(data);
-        
 
-        return processResponse(data);
+        return [processResponse(data), fiveDayData];
     } catch (error) {
         console.log(`Error: ${error}, retrieving forecast for ${city}`);
     }
@@ -160,14 +168,16 @@ function displayForecast(data) {
         const iconCode = data.weather_icon;
         mainTemp.textContent = displayTemperature(data.temp, opt.tempUnit);
         weatherIcon.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    }
+    };
 
     const displayCurrentTemperature = () => {
         // temperature
         const temp = document.querySelector('.temp');
         const descriptor = document.querySelector('.descriptor');
 
-        const tempRange = ['temp_min', 'temp_max'].map((field) => displayTemperature(data[field], opt.tempUnit));
+        const tempRange = ['temp_min', 'temp_max'].map((field) =>
+            displayTemperature(data[field], opt.tempUnit)
+        );
 
         temp.textContent = `${tempRange[0]} - ${tempRange[1]}`;
         descriptor.textContent = `Feels like ${displayTemperature(
@@ -204,10 +214,10 @@ function displayMap(data) {
     // WeatherMap 1.0
     const mapURL = `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${API_KEY}`;
     // WeatherMap 2.0
-    
+
     const { lon } = data.coords;
     const { lat } = data.coords;
-        
+
     const map = new Map({
         target: 'map',
         layers: [
@@ -224,14 +234,15 @@ function displayMap(data) {
     const precipLayer = new TileLayer({
         source: new XYZ({
             url: mapURL,
-        })
+        }),
     });
     map.addLayer(precipLayer);
 }
 
 const printForecast = async (city) => {
     opt.forecast = await getWeatherForCity(city);
-    displayForecast(opt.forecast);
+    console.log(opt.forecast);
+    displayForecast(opt.forecast[0]);
     // temporarily hide map
     // displayMap(opt.forecast);
 };
