@@ -74,7 +74,6 @@ function degreesToCardinal(windDir) {
 
     let index = windDir % 360;
     index = Math.round(index / 45);
-    console.log(index);
     const compassDirection = compassSectors[index];
     return compassDirection;
 }
@@ -165,6 +164,7 @@ function displayForecast(data) {
         // temperature
         const temp = document.querySelector('.temp');
         const descriptor = document.querySelector('.descriptor');
+
         temp.textContent = displayTemperature(data.temp, opt.tempUnit);
         descriptor.textContent = `Feels like ${displayTemperature(
             data.feels_like_temp,
@@ -173,7 +173,6 @@ function displayForecast(data) {
     };
 
     const displayWind = () => {
-        console.log(data.wind.deg);
         const wind = document.querySelector('.wind');
         wind.textContent = `${data.wind.speed} m/s ${degreesToCardinal(
             data.wind.deg
