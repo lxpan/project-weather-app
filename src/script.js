@@ -232,7 +232,8 @@ function displayMap(data) {
 const printForecast = async (city) => {
     opt.forecast = await getWeatherForCity(city);
     displayForecast(opt.forecast);
-    displayMap(opt.forecast);
+    // temporarily hide map
+    // displayMap(opt.forecast);
 };
 
 function loadCityForecast() {
