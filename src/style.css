@@ -8,8 +8,7 @@ body {
 
 .main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 3fr 4fr;
     margin: 20px;
 }
 
@@ -21,6 +20,7 @@ body {
 
 .at-a-glance {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 

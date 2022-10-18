@@ -154,6 +154,13 @@ function displayForecast(data) {
         geocode.textContent = `${data.coords.lat}, ${data.coords.lon}`;
     };
 
+    const displayAtAGlance = () => {
+        const mainTemp = document.querySelector('.main-temp');
+        const weatherIcon = document.querySelector('.weather-icon');
+        mainTemp.textContent = displayTemperature(data.temp, opt.tempUnit);
+        weatherIcon.src = 'http://openweathermap.org/img/wn/10d@2x.png';
+    }
+
     const displayCurrentTemperature = () => {
         // temperature
         const temp = document.querySelector('.temp');
@@ -183,6 +190,7 @@ function displayForecast(data) {
     };
 
     displayLocation();
+    displayAtAGlance();
     displayCurrentTemperature();
     displayWind();
     displayRain();
