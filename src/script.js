@@ -125,8 +125,8 @@ async function getWeatherForCity(city) {
         const response = await fetch(
             `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
         );
-        // const data = await response.json();
-        const data = MOCK_DATA;
+        const data = await response.json();
+        // const data = MOCK_DATA;
         console.log(data);
         
 
@@ -165,7 +165,9 @@ function displayForecast(data) {
         const temp = document.querySelector('.temp');
         const descriptor = document.querySelector('.descriptor');
 
-        temp.textContent = displayTemperature(data.temp, opt.tempUnit);
+        const tempRange = ['temp_min', 'temp_max'].map((field) => displayTemperature(data[field], opt.tempUnit));
+
+        temp.textContent = `${tempRange[0]} - ${tempRange[1]}`;
         descriptor.textContent = `Feels like ${displayTemperature(
             data.feels_like_temp,
             opt.tempUnit
@@ -239,4 +241,4 @@ function loadCityForecast() {
 const cityButton = document.getElementById('getCityButton');
 cityButton.addEventListener('click', loadCityForecast);
 
-printForecast('Ballarat');
+// printForecast('Ballarat');
