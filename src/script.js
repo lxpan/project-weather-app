@@ -154,7 +154,7 @@ async function getWeatherForCity(city) {
     return 'Error';
 }
 
-function displayForecast(data) {
+function displayForecast(data, extended) {
     const capitaliseString = (str) => {
         if (typeof str === 'string') {
             const capitalise = str.charAt(0).toUpperCase() + str.slice(1);
@@ -210,11 +210,43 @@ function displayForecast(data) {
         }
     };
 
+    const displayExtendedForecast = () => {
+        const extendedForecastDiv = document.querySelector('.extended-forecast');
+        const currentDay = (new Date()).getDay();
+        const fiveDayForecasts = extended.filter((row) => row.time.includes('11:00:00'));
+
+        fiveDayForecasts.forEach((day) => {
+            const forecastDate = new Date(day.time);
+            // const day = date.getDay();
+            const options = { weekday: 'long'};
+            const fullDayName = new Intl.DateTimeFormat('en-US', options).format(forecastDate);
+            console.log(fullDayName);
+
+            const dayForecastDiv = document.createElement('div');
+            dayForecastDiv.classList.add('extended-forecast__dayForecastDiv');
+            const dayName = document.createElement('div');
+            const dayTemp = document.createElement('div');
+            const dayIcon = document.createElement('img');
+
+            dayName.textContent = fullDayName;
+            dayName.classList.add('extended-forecast__dayName');
+
+            dayTemp.textContent = day.temp;
+            dayTemp.classList.add('extended-forecast__dayTemperature');
+
+            dayIcon.src = `http://openweathermap.org/img/wn/${day.weather_icon}@2x.png`;
+
+            dayForecastDiv.append(dayName, dayTemp, dayIcon);
+            extendedForecastDiv.appendChild(dayForecastDiv);
+        });
+    }
+
     displayLocation();
     displayAtAGlance();
     displayCurrentTemperature();
     displayWind();
     displayRain();
+    displayExtendedForecast();
 }
 
 function displayMap(data) {
@@ -250,7 +282,7 @@ function displayMap(data) {
 const printForecast = async (city) => {
     opt.forecast = await getWeatherForCity(city);
     console.log(opt.forecast);
-    displayForecast(opt.forecast[0]);
+    displayForecast(opt.forecast[0], opt.forecast[1]);
     // temporarily hide map
     // displayMap(opt.forecast);
 };
@@ -263,4 +295,4 @@ function loadCityForecast() {
 const cityButton = document.getElementById('getCityButton');
 cityButton.addEventListener('click', loadCityForecast);
 
-// printForecast('Ballarat');
+printForecast('Ballarat');
