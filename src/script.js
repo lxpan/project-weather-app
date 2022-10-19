@@ -6,7 +6,7 @@ import XYZ from 'ol/source/XYZ';
 import beaufort from 'beaufort-scale';
 import './style.css';
 
-
+// Free-tier OpenWeatherMap API key
 const API_KEY = 'a9fa31006d3ec59a7888dead8b265f57';
 
 const opt = {
@@ -140,8 +140,10 @@ async function getWeatherForCity(city) {
         );
         const data = await response.json();
 
+        const unit = (opt.tempUnit === 'C') ? 'metric' : 'imperial';
+
         const responseFiveDay = await fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${API_KEY}&units=metric`
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${API_KEY}&units=${unit}`
         );
         const fiveDayData = await responseFiveDay.json();
         const fiveDayDataProcessed = fiveDayData.list.map((row) => processResponse(row));
@@ -230,7 +232,7 @@ function displayForecast(data, extended) {
             dayName.textContent = `${fullDayName.slice(0,3)} ${forecastDate.toLocaleDateString().slice(0,2)}`;
             dayName.classList.add('extended-forecast__dayName');
 
-            dayTemp.textContent = `${Math.round(day.temp)}\u00B0C`;
+            dayTemp.textContent = (opt.tempUnit === 'C') ? `${Math.round(day.temp)}\u00B0C` : `${Math.round(day.temp)}\u00B0F`;
             dayTemp.classList.add('extended-forecast__dayTemperature');
 
             dayIcon.src = `http://openweathermap.org/img/wn/${day.weather_icon}@2x.png`;
