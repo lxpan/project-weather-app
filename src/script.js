@@ -143,11 +143,8 @@ async function getWeatherForCity(city) {
         );
         const fiveDayData = await responseFiveDay.json();
         const fiveDayDataProcessed = fiveDayData.list.map((row) => processResponse(row));
-        console.log(fiveDayData);
-        console.log(fiveDayDataProcessed);
         
         // const data = MOCK_DATA;
-        console.log(data);
 
         return [processResponse(data), fiveDayDataProcessed];
     } catch (error) {
