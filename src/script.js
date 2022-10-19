@@ -266,7 +266,7 @@ function displayMap(data) {
         ],
         view: new View({
             center: fromLonLat([lon, lat]),
-            zoom: 10,
+            zoom: 12,
         }),
     });
 
