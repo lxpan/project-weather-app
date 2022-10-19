@@ -109,7 +109,8 @@ function displayTemperature(kelvin, unit) {
 
 async function getWeatherForCity(city) {
     const convertUTCtoLocalTime = (utc) => {
-        const timestamp = utc += ' UTC';
+        const timestamp = `${utc} UTC`;
+        console.log(timestamp);
         const date = new Date(timestamp);
         const localTimestamp = date.toString();
         return localTimestamp;
