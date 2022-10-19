@@ -284,7 +284,13 @@ const printForecast = async (city) => {
     // displayMap(opt.forecast);
 };
 
+function resetForecastDisplay() {
+    const extendedForecasts = document.querySelector('.extended-forecast');
+    extendedForecasts.innerHTML = '';
+}
+
 function loadCityForecast() {
+    resetForecastDisplay();
     opt.city = document.getElementById('cityBox').value;
     printForecast(opt.city);
 }
