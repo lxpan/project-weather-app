@@ -192,7 +192,7 @@ function displayForecast(data, extended) {
         descriptor.textContent = `Feels like ${displayTemperature(
             data.feels_like_temp,
             opt.tempUnit
-        )}. ${capitaliseString(data.weather_description)}.`;
+        )}. ${capitaliseString(data.weather_description)}. ${(beaufort(data.wind.speed)).desc}.`;
     };
 
     const displayWind = () => {
