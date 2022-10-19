@@ -225,7 +225,8 @@ function displayForecast(data, extended) {
             const dayTemp = document.createElement('div');
             const dayIcon = document.createElement('img');
 
-            dayName.textContent = fullDayName;
+            // Only show first three letters of day - e.g. 'Mon', 'Tue', 'Wed';
+            dayName.textContent = `${fullDayName.slice(0,3)} ${forecastDate.toLocaleDateString().slice(0,2)}`;
             dayName.classList.add('extended-forecast__dayName');
 
             dayTemp.textContent = `${Math.round(day.temp)}\u00B0C`;
