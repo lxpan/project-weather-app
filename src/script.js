@@ -298,10 +298,21 @@ function resetForecastDisplay() {
 function loadCityForecast() {
     resetForecastDisplay();
     opt.city = document.getElementById('cityBox').value;
+    console.log(opt.city);
+    printForecast(opt.city);
+}
+
+function switchTemperatureUnit() {
+    console.log(opt.city);
+    opt.tempUnit = (opt.tempUnit === 'C') ? 'F' : 'C';
+    resetForecastDisplay();
     printForecast(opt.city);
 }
 
 const cityButton = document.getElementById('getCityButton');
 cityButton.addEventListener('click', loadCityForecast);
+
+const switchUnitBtn = document.getElementById('switchUnitButton');
+switchUnitBtn.addEventListener('click', switchTemperatureUnit);
 
 printForecast('Ballarat');
