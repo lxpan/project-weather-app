@@ -228,7 +228,7 @@ function displayForecast(data, extended) {
             dayName.textContent = fullDayName;
             dayName.classList.add('extended-forecast__dayName');
 
-            dayTemp.textContent = day.temp;
+            dayTemp.textContent = `${Math.round(day.temp)}\u00B0C`;
             dayTemp.classList.add('extended-forecast__dayTemperature');
 
             dayIcon.src = `http://openweathermap.org/img/wn/${day.weather_icon}@2x.png`;
