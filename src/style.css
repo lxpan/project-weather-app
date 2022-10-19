@@ -22,6 +22,11 @@ header h1, .city-search {
     justify-self: center;
 }
 
+.city-search {
+    display: flex;
+    flex-direction: column;
+}
+
 .main {
     display: grid;
     grid-template-columns: 3fr 4fr;
