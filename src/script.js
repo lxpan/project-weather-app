@@ -212,15 +212,12 @@ function displayForecast(data, extended) {
 
     const displayExtendedForecast = () => {
         const extendedForecastDiv = document.querySelector('.extended-forecast');
-        const currentDay = (new Date()).getDay();
         const fiveDayForecasts = extended.filter((row) => row.time.includes('11:00:00'));
 
         fiveDayForecasts.forEach((day) => {
             const forecastDate = new Date(day.time);
-            // const day = date.getDay();
             const options = { weekday: 'long'};
             const fullDayName = new Intl.DateTimeFormat('en-US', options).format(forecastDate);
-            console.log(fullDayName);
 
             const dayForecastDiv = document.createElement('div');
             dayForecastDiv.classList.add('extended-forecast__dayForecastDiv');
