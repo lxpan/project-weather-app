@@ -19,6 +19,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "beaufort-scale": "^1.1.2",
     "ol": "^7.1.0"
   }
 }
