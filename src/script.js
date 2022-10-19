@@ -283,12 +283,14 @@ const printForecast = async (city) => {
     console.log(opt.forecast);
     displayForecast(opt.forecast[0], opt.forecast[1]);
     // temporarily hide map
-    // displayMap(opt.forecast);
+    displayMap(opt.forecast[0]);
 };
 
 function resetForecastDisplay() {
     const extendedForecasts = document.querySelector('.extended-forecast');
+    const map = document.getElementById('map');
     extendedForecasts.innerHTML = '';
+    map.innerHTML = '';
 }
 
 function loadCityForecast() {
