@@ -84,7 +84,8 @@ function displayTemperature(kelvin, unit) {
     function KelvinToCelsius() {
         if (typeof kelvin === 'number') {
             const celsius = kelvin - 273.15;
-            return celsius.toPrecision(3);
+            // return celsius.toPrecision(3);
+            return Math.round(celsius);
         }
         throw new Error('Temperature is not a number!');
     }
@@ -92,7 +93,8 @@ function displayTemperature(kelvin, unit) {
     function KelvinToFahrenheit() {
         if (typeof kelvin === 'number') {
             const fahrenheit = 1.8 * (kelvin - 273) + 32;
-            return fahrenheit.toPrecision(4);
+            // return fahrenheit.toPrecision(4);
+            return Math.round(fahrenheit);
         }
         throw new Error('Temperature is not a number!');
     }
@@ -110,7 +112,6 @@ function displayTemperature(kelvin, unit) {
 async function getWeatherForCity(city) {
     const convertUTCtoLocalTime = (utc) => {
         const timestamp = `${utc} UTC`;
-        console.log(timestamp);
         const date = new Date(timestamp);
         const localTimestamp = date.toString();
         return localTimestamp;
