@@ -136,7 +136,7 @@ async function getWeatherForCity(city) {
 
     try {
         const response = await fetch(
-            `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`
         );
         const data = await response.json();
 
@@ -178,7 +178,7 @@ function displayForecast(data, extended) {
         const weatherIcon = document.querySelector('.weather-icon');
         const iconCode = data.weather_icon;
         mainTemp.textContent = displayTemperature(data.temp, opt.tempUnit);
-        weatherIcon.src = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
     };
 
     const displayCurrentTemperature = () => {
@@ -235,7 +235,7 @@ function displayForecast(data, extended) {
             dayTemp.textContent = (opt.tempUnit === 'C') ? `${Math.round(day.temp)}\u00B0C` : `${Math.round(day.temp)}\u00B0F`;
             dayTemp.classList.add('extended-forecast__dayTemperature');
 
-            dayIcon.src = `http://openweathermap.org/img/wn/${day.weather_icon}@2x.png`;
+            dayIcon.src = `https://openweathermap.org/img/wn/${day.weather_icon}@2x.png`;
 
             dayForecastDiv.append(dayName, dayTemp, dayIcon);
             extendedForecastDiv.appendChild(dayForecastDiv);
